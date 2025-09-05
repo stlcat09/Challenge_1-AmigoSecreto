@@ -62,43 +62,23 @@ function eliminarAmigo(index) {
 }
 
 function sortearAmigo() {
-  if (amigos.length < 2) { mostrarResultado('Necesitas al menos 2 nombres para sortear.'); return; }
-
-  if (usados.length === amigos.length) usados = [];
-
-  var elegido = null;
-  var intentos = 0;
-  while (elegido === null && intentos < 1000) {
-    var idx = Math.floor(Math.random() * amigos.length);
-    var candidato = amigos[idx];
-
-    var yaSalio = false;
-    for (var i = 0; i < usados.length; i++) {
-      if (usados[i] === candidato) { yaSalio = true; break; }
-    }
-    if (!yaSalio) elegido = candidato;
-    intentos++;
+  if (amigos.length < 2) {
+    mostrarResultado('Necesitas al menos 2 nombres para sortear.');
+    return;
   }
 
-  if (elegido === null) { mostrarResultado('No se pudo sortear. Intenta de nuevo.'); return; }
+  var idx = Math.floor(Math.random() * amigos.length);
+  var elegido = amigos[idx];
 
-  usados.push(elegido);
+
   mostrarResultado('🎁 Tu amigo secreto es: ' + elegido);
+
+
+  amigos.splice(idx, 1);
+  renderLista();
 }
 
 
-window.agregarAmigo = agregarAmigo;
-window.sortearAmigo = sortearAmigo;
-
-
-input.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    agregarAmigo();
-  }
-});
-
-renderLista();
 
 
 
